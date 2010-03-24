@@ -1,5 +1,5 @@
 EEPROMRead:
-ERL01:	sbic	EECR,EEWE	;if EEWE not clear
+ERL01:	sbic	EECR,EEPE	;if EEWE not clear
 		rjmp	ERL01		; wait more 
 
 		out	EEARH, ZH	;output address 
@@ -10,15 +10,15 @@ ERL01:	sbic	EECR,EEWE	;if EEWE not clear
 		ret
 	
 EEPROMWrite:
-EWL01:	sbic	EECR,EEWE	;if EEWE not clear
+EWL01:	sbic	EECR,EEPE	;if EEWE not clear
 		rjmp	EWL01		;    wait more
 	
 		out	EEARH, ZH	
 		out	EEARL, ZL	
 
 		out	EEDR,OSRG	;output data
-		sbi	EECR,EEMWE	;set EEPROM Master Write Enable
-		sbi	EECR,EEWE	;set EEPROM Write strobe
+		sbi	EECR,EEMPE	;set EEPROM Master Write Enable
+		sbi	EECR,EEPE	;set EEPROM Write strobe
 		ret
 
 ClearTaskQueue:
