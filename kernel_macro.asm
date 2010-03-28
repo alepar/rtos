@@ -75,12 +75,11 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 
 ;======================================================================================
 			.MACRO	INIT_RTOS
-			ldi OSRG, 0x00
-			out SREG, OSRG			; Инициализация SREG 
+			outi SREG, 0x00			; Инициализация SREG 
 
-			rcall ClearTimers		; Очистить список таймеров РТОС
+			rcall ClearTimers	; Очистить список таймеров РТОС
 			rcall ClearTaskQueue	; Очистить очередь событий РТОС
-			sei						; Разрешить обработку прерываний
+			sei			; Разрешить обработку прерываний
 
 ; Init Timer 2
 ; Основной таймер для ядра РТОС
@@ -89,15 +88,14 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 			.equ TimerDivider 	= MainClock/64/1000 	; 1 mS
 
 
-			ldi OSRG,1<<CTC2|4<<CS20	; Freq = CK/64 - Установить режим и предделитель
-			out TCCR2,OSRG				; Автосброс после достижения регистра сравнения
+			outi TCCR0B, 3<<CS00	        ; Freq = CK/64 - Установить режим и предделитель
+			outi TCCR0A, 1<<WGM01		; Автосброс после достижения регистра сравнения
 
-			clr OSRG					; Установить начальное значение счётчиков
-			sts TCNT2,OSRG				;	
+			clr OSRG			; Установить начальное значение счётчиков
+			sts TCNT2,OSRG			;	
 			
 
-			ldi OSRG,low(TimerDivider)
-			out OCR2,OSRG				; Установить значение в регистр сравнения
+			outi OCR0A,low(TimerDivider)	; Установить значение в регистр сравнения
 			.ENDM
 ;=======================================================================================
 ;SRAM STS analog for Tiny
@@ -179,11 +177,11 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 			.equ bauddivider 	= MainClock/(16*baudrate)-1
 
 			
-			OUTI 	UBRRL,low(bauddivider)
-			OUTI 	UBRRH,high(bauddivider)
-			OUTI 	UCSRA, 0
-			OUTI 	UCSRB,(1<<RXEN)|(1<<TXEN)|(1<<RXCIE)|(1<<TXCIE)
-			OUTI 	UCSRC,(1<<URSEL)|(1<<UCSZ0)|(1<<UCSZ1)
+			STI 	UBRR0L,low(bauddivider)
+			STI 	UBRR0H,high(bauddivider)
+			STI 	UCSR0A, 0
+			STI 	UCSR0B,(1<<RXEN0)|(1<<TXEN0)|(1<<RXCIE0)|(1<<TXCIE0)
+			STI 	UCSR0C,(1<<UCSZ00)|(1<<UCSZ01)
 			.ENDM
 
 
