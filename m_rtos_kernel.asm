@@ -1,10 +1,4 @@
 ;==========================================================================
-; CPU Config
-		.equ MainClock 		= 8000000				; CPU Clock
-		.equ baudrate 		= 9600
-
-
-;==========================================================================
 ;Kernel Macro
 ;==========================================================================
 		.MACRO SetTimerTask
@@ -174,11 +168,10 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 
 
 			.MACRO	USART_INIT
-			.equ bauddivider 	= MainClock/(16*baudrate)-1
 
 			
-			STI 	UBRR0L,low(bauddivider)
-			STI 	UBRR0H,high(bauddivider)
+			STI 	UBRR0L,low(UsartDiv)
+			STI 	UBRR0H,high(UsartDiv)
 			STI 	UCSR0A, 0
 			STI 	UCSR0B,(1<<RXEN0)|(1<<TXEN0)|(1<<RXCIE0)|(1<<TXCIE0)
 			STI 	UCSR0C,(1<<UCSZ00)|(1<<UCSZ01)
