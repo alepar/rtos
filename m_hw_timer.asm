@@ -1,4 +1,4 @@
-.macro SETUO_TIMER0
+.macro SETUP_TIMER0
         ; set OCR0A - TOP value 
         outi OCR0A, 0xf0 
         ; set OCIE0A - unmask interrupt 

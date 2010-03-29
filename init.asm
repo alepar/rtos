@@ -1,23 +1,9 @@
 ; Тут первичная инициализация всего
 			CLEAR_RAM			; Полная очистка оперативки и регистров
 	
-			USART_INIT			; Запуск USART
+			SETUP_USART0			; Запуск USART
 	
 			INIT_RTOS			; Подготовка к запуску ОС - очистка и инициализация очередей
 
 			STI	TIMSK0,0<<TOIE0 	; Разрешаем прерывание RTOS - запуск ОС
                         OUTI    TIFR0, 1<<OCF0A
-			
-
-;Инициализация портов ввода вывода. В частности кнопок.
-			SBI		BTA_P,BTA
-			SBI		BTB_P,BTB
-			SBI		BTC_P,BTC
-			SBI		BTD_P,BTD
-			
-			CBI		BTA_D,BTA
-			CBI		BTB_D,BTB
-			CBI		BTC_D,BTC
-			CBI		BTD_D,BTD
-			
-

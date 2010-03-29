@@ -164,19 +164,6 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 			.ENDM
 
 ;========================================================================================
-;USART INIT
-
-
-			.MACRO	USART_INIT
-
-			
-			STI 	UBRR0L,low(UsartDiv)
-			STI 	UBRR0H,high(UsartDiv)
-			STI 	UCSR0A, 0
-			STI 	UCSR0B,(1<<RXEN0)|(1<<TXEN0)|(1<<RXCIE0)|(1<<TXCIE0)
-			STI 	UCSR0C,(1<<UCSZ00)|(1<<UCSZ01)
-			.ENDM
-
 
 			.MACRO	CLEAR_RAM
 RAM_Flush:	LDI		ZL,Low(SRAM_START)
