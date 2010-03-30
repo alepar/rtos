@@ -16,19 +16,13 @@ Mode:		.byte					1		; Переменная режима отображения
 ADC_Data:	.byte					1		; Тут складируются данные АЦП
 ADC_OLD:	.byte					1		; Тут хранится предыдущее значение данных АЦП
 
-ADC_DIG0:	.byte					1		; В этих трех ячейках хранятся ASCII коды
-ADC_DIG1:	.byte					1		; данных из АЦП, подготовленные к выводу на экран
-ADC_DIG2:	.byte					1		; 
 
-Pressed_B:	.byte					1		; В этой переменной хранится имя последней нажатой клавиши
-
-UDR_I:		.byte					1		; Принятый байт 
 
 ; Очереди операционной системы
-			.equ TaskQueueSize 		= 20				; Размер очереди задач
+		.equ TaskQueueSize 		= 20				; Размер очереди задач
 TaskQueue: 	.byte					TaskQueueSize 		; Адрес очереди задач в SRAM
 			
-			.equ TimersPoolSize 	= 20				; Количество таймеров
+		.equ TimersPoolSize 	= 20				; Количество таймеров
 TimersPool:	.byte 					TimersPoolSize*3	; Адреса информации о таймерах (очередь)
 
 
