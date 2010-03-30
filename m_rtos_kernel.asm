@@ -73,23 +73,7 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 
 			rcall ClearTimers	; Очистить список таймеров РТОС
 			rcall ClearTaskQueue	; Очистить очередь событий РТОС
-			sei			; Разрешить обработку прерываний
-
-; Init Timer 2
-; Основной таймер для ядра РТОС
-
-
-			.equ TimerDivider 	= MainClock/64/1000 	; 1 mS
-
-
-			outi TCCR0B, 3<<CS00	        ; Freq = CK/64 - Установить режим и предделитель
-			outi TCCR0A, 1<<WGM01		; Автосброс после достижения регистра сравнения
-
-			clr OSRG			; Установить начальное значение счётчиков
-			sts TCNT2,OSRG			;	
-			
-
-			outi OCR0A,low(TimerDivider)	; Установить значение в регистр сравнения
+	
 			.ENDM
 ;=======================================================================================
 ;SRAM STS analog for Tiny
