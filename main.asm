@@ -59,6 +59,7 @@ Reset:
 ; Запуск фоновых процессов
 Background:	
 	RCALL	Send				; Отсыл байт в UART 
+	RCALL	Send2				; Отсыл байт в UART 
 			
 
 Main:
@@ -75,8 +76,14 @@ Idle:		RET		; Простой ядра. Не используется
 ;-----------------------------------------------------------------------------
 ; Задача отсылки данных через терминал
 Send:
-        SetTimerTask TS_Send, 4
-        lds GREG, 50
+        SetTimerTask TS_Send, 32
+        ldi GREG, 48
+        sts UDR0, GREG				; Отправить его через USART 
+        ret
+
+Send2:
+        SetTimerTask TS_Send2, 48
+        ldi GREG, 50
         sts UDR0, GREG				; Отправить его через USART 
         ret
 
@@ -92,9 +99,12 @@ Send:
 ; Индексы (номера) задач.
 .equ TS_Idle 	= 0
 .equ TS_Send 	= 1
+.equ TS_Send2 	= 2
+
 
 ; А это их адреса во флеше. ПО индексу вычисляется смещение в таблице адресов и происходит 
 ; Переход к задаче
 TaskProcs:
 .dw Idle        ; [00] 
 .dw Send        ; [01] 
+.dw Send2       ; [02] 
