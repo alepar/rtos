@@ -2,7 +2,7 @@
 ;Kernel Macro
 ;==========================================================================
 		.MACRO SetTimerTask
-		ldi 	OSRG, @0
+		ldi 	GREG, @0
 		ldi 	XL, Low(@1)			;
 		ldi 	XH, High(@1)			; ЗАдержка в милисекундах
 		rcall 	SetTimer
@@ -11,15 +11,15 @@
 ;==========================================================================
 
 		.MACRO SetTask
-		ldi OSRG, @0			; Обращение к процедуре через событийный диспетчер
+		ldi GREG, @0			; Обращение к процедуре через событийный диспетчер
 		rcall SendTask				; 
 		.ENDM
 
 ;==========================================================================
 		.MACRO TimerService
-			push 	OSRG
-			in 		OSRG,SREG			; Save Sreg
-			push 	OSRG				; Сохранение регистра OSRG и регистра состояния SREG
+			push 	GREG
+			in 		GREG,SREG			; Save Sreg
+			push 	GREG				; Сохранение регистра GREG и регистра состояния SREG
 
 			push 	ZL	
 			push 	ZH					; сохранение Регистра Z
@@ -30,28 +30,28 @@
 
 			ldi 	Counter,TimersPoolSize ; максимальное количество таймеров
 	
-Comp1L01:	ld 		OSRG,Z				; OSRG = [Z] ; Получить номер события
-			cpi 	OSRG,$FF			; Проверить на "NOP"
+Comp1L01:	ld 		GREG,Z				; GREG = [Z] ; Получить номер события
+			cpi 	GREG,$FF			; Проверить на "NOP"
 			breq 	Comp1L03			; Если NOP то переход к следующей позиции
 
 			clt							; Флаг T используется для сохранения информации об окончании счёта
-			ldd 	OSRG,Z+1			; 
-			subi 	OSRG,Low(1) 		; Уменьшение младшей части счётчика на 1
-			std 	Z+1,OSRG			;
+			ldd 	GREG,Z+1			; 
+			subi 	GREG,Low(1) 		; Уменьшение младшей части счётчика на 1
+			std 	Z+1,GREG			;
 			breq 	Comp1L02			; Если 0 то флаг T не устанавливаем
 			set							; 
 
-Comp1L02:	ldd 	OSRG,Z+2			;
-			sbci 	OSRG,High(1) 		; Уменьшение старшей части счётчика на 1
-			std 	Z+2,OSRG			;
+Comp1L02:	ldd 	GREG,Z+2			;
+			sbci 	GREG,High(1) 		; Уменьшение старшей части счётчика на 1
+			std 	Z+2,GREG			;
 			brne 	Comp1L03			; Счёт не окончен
 			brts 	Comp1L03			; Счёт не окончен (по T)	
 	
-			ld 		OSRG,Z				; Получить номер события
+			ld 		GREG,Z				; Получить номер события
 			rcall 	SendTask			; послать в системную очередь задач
 	
-			ldi 	OSRG,$FF			; = NOP (задача выполнена, таймер самоудаляется)
-			st 		Z, OSRG				; Clear Event
+			ldi 	GREG,$FF			; = NOP (задача выполнена, таймер самоудаляется)
+			st 		Z, GREG				; Clear Event
 
 Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 			sbci 	ZH,High(-3)			; Z+=3 - переход к следующему таймеру
@@ -62,9 +62,9 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 			pop 	ZH
 			pop 	ZL
 
-			pop 	OSRG				; Восстанавливаем регистры
-			out 	SREG,OSRG			; 
-			pop 	OSRG
+			pop 	GREG				; Восстанавливаем регистры
+			out 	SREG,GREG			; 
+			pop 	GREG
 			.ENDM
 
 ;======================================================================================
@@ -108,8 +108,8 @@ Comp1L03:	subi 	ZL,Low(-3)			; Skip Counter
 
 ;STSI
 			.MACRO STSI
-			LDI		OSRG,@1
-			STS		@0,OSRG
+			LDI		GREG,@1
+			STS		@0,GREG
 			.ENDM
 ;=======================================================================================
 ;FLASH

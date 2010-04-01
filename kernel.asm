@@ -6,7 +6,7 @@ ERL01:	sbic	EECR,EEPE	;if EEWE not clear
 		out	EEARL, ZL	;output address 
 
 		sbi	EECR, EERE	;set EEPROM Read strobe
-		in	OSRG, EEDR	;get data
+		in	GREG, EEDR	;get data
 		ret
 	
 EEPROMWrite:
@@ -16,7 +16,7 @@ EWL01:	sbic	EECR,EEPE	;if EEWE not clear
 		out	EEARH, ZH	
 		out	EEARL, ZL	
 
-		out	EEDR,OSRG	;output data
+		out	EEDR,GREG	;output data
 		sbi	EECR,EEMPE	;set EEPROM Master Write Enable
 		sbi	EECR,EEPE	;set EEPROM Write strobe
 		ret
@@ -28,10 +28,10 @@ ClearTaskQueue:
 		ldi ZL, low(TaskQueue)
 		ldi ZH, high(TaskQueue)
 
-		ldi OSRG, $FF		
+		ldi GREG, $FF		
 		ldi Counter, TaskQueueSize
 
-CEQL01: st Z+, OSRG		;
+CEQL01: st Z+, GREG		;
 		dec Counter		;
 		brne CEQL01		; Loop
 
@@ -47,10 +47,10 @@ ClearTimers:
 		ldi ZH, high(TimersPool)
 
 		ldi Counter, TimersPoolSize
-		ldi OSRG, $FF		; Empty 
+		ldi GREG, $FF		; Empty 
 		ldi Tmp2, $00
 
-CTL01:	st Z+, OSRG		; Event
+CTL01:	st Z+, GREG		; Event
 		st Z+, Tmp2		; Counter Lo
 		st Z+, Tmp2		; Counter Hi
 
@@ -69,22 +69,22 @@ ProcessTaskQueue:
 		ldi ZL, low(TaskQueue)
 		ldi ZH, high(TaskQueue)
 
-		ld OSRG, Z		; For Event
-		cpi OSRG, $FF	; No Event or Addr out of Range
+		ld GREG, Z		; For Event
+		cpi GREG, $FF	; No Event or Addr out of Range
 		breq PTQL02		; No Action
 	
 		clr ZH
-		lsl OSRG
-		mov ZL, OSRG
+		lsl GREG
+		mov ZL, GREG
 
 		subi ZL, low(-TaskProcs*2)
 		sbci ZH, high(-TaskProcs*2) ; Add
 	
 		lpm					; mov r0 <- CODE[Z]
-		mov OSRG, r0
+		mov GREG, r0
 		ld r0, Z+			; inc Z
 		lpm	
-		mov ZL, OSRG		; Get Addr
+		mov ZL, GREG		; Get Addr
 		mov ZH, r0
 	
 		push ZL
@@ -97,14 +97,14 @@ ProcessTaskQueue:
 	
 		cli
 	
-PTQL01:	ldd OSRG, Z+1 		;	Shift Queues
-		st Z+, OSRG		;
-;		cpi OSRG, $FF		;
+PTQL01:	ldd GREG, Z+1 		;	Shift Queues
+		st Z+, GREG		;
+;		cpi GREG, $FF		;
 ;		breq PTQL02		; For Long Queues
 		dec Counter		;
 		brne PTQL01		; Loop
-		ldi OSRG, $FF		;
-		st Z+, OSRG		;
+		ldi GREG, $FF		;
+		st Z+, GREG		;
 	
 		sei
 
@@ -117,7 +117,7 @@ PTQL02:	ret
 
 
 ;-------------------------------------------------------------------------
-; OSRG - Event
+; GREG - Event
 SendTask:
 		push ZL
 		push ZH
@@ -138,7 +138,7 @@ SEQL01: ld Tmp2, Z+
 		breq SEQL03		; Loop
 		rjmp SEQL01
 
-SEQL02: st -Z, OSRG		; Store EVENT
+SEQL02: st -Z, GREG		; Store EVENT
 
 
 
@@ -149,7 +149,7 @@ SEQL03:					; EXIT
 		pop ZL
 		ret	
 ;------------------------------------------------------------------------	
-; OSRG - Timer Event
+; GREG - Timer Event
 ; X - Counter
 SetTimer:
 		push ZL
@@ -163,7 +163,7 @@ SetTimer:
 		ldi Counter, TimersPoolSize
 	
 STL01: ld Tmp2, Z		; Value / Counter
-		cp Tmp2, OSRG		; Search for Event
+		cp Tmp2, GREG		; Search for Event
 		breq STL02
 	
 		subi ZL, Low(-3)	; Skip Counter
@@ -197,7 +197,7 @@ STL04:	ld Tmp2, Z		; Value / Counter
 		rjmp STL04
 	
 STL05:	cli
-		st Z, OSRG		; Set Event 
+		st Z, GREG		; Set Event 
 		std Z+1, XL
 		std Z+2, XH
 		sei
@@ -211,10 +211,10 @@ STL06:
 
 
 RAND:	
-;		ldi OSRG, 17		; MUL RND,17
+;		ldi GREG, 17		; MUL RND,17
 ;		clr Tmp2
 ;MULLoop:add Tmp2, RND
-;		dec OSRG
+;		dec GREG
 ;		brne MULLoop		; 4
 
 		mov	Tmp2, RND	; x1
@@ -236,8 +236,8 @@ RAND:
 SaveRAM:	PUSH	ZH
 			PUSH	ZL
 			
-			MOV		ZH,OSRG
-			MOV		ZL,OSRG
+			MOV		ZH,GREG
+			MOV		ZL,GREG
 
 			POP		ZL
 
