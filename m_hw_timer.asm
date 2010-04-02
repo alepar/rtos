@@ -1,13 +1,12 @@
 .macro SETUP_TIMER0		
-        .equ TimerTOP = MainClock/64/@0			; TOP counter value formula, @0 - Hz requested
+        .equ TimerTOP = MainClock/8/@0			; TOP counter value formula, @0 - Hz requested
 
         sts TCNT0,ZERO
 
-;        outi OCR0A, low(TimerTOP)			; set OCR0A - TOP value 
-        outi OCR0A, 0xFF
+        outi OCR0A, low(TimerTOP)			; set OCR0A - TOP value 
         sti TIMSK0, (1<<OCIE0A) 			; set OCIE0A - unmask interrupt 
         outi TCCR0A,(2<<WGM00) 				; enable CTC mode 
-        outi TCCR0B, (5<<CS00)				; set prescaler
+        outi TCCR0B, (2<<CS00)				; set prescaler
 .endmacro
 
 
