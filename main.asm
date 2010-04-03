@@ -12,7 +12,7 @@
 .equ TimersPoolSize = 20			; Количество таймеров
 
 TaskQueue:
-	.byte TaskQueueSize	 		; Адрес очереди задач в SRAM
+	.byte TaskQueueSize	 		; Очереди задач в SRAM
 TimersPool:	
 	.byte TimersPoolSize*3			; Адреса информации о таймерах (очередь)
 
@@ -26,67 +26,71 @@ TimersPool:
 ;=============================================================================!
 ; Interrupts procs ===========================================================!
 ;=============================================================================!
-; Output Compare 2 interrupt 
+; Timer Interrupt 
 ; Main Timer Service - Служба Таймеров Ядра РТОС - Обработчик прерывания
-OutComp2Int:
+RtosTimerInt:
 	TimerService				; Служба таймера RTOS 
-	RETI					; выходим из прерывания
+	reti					; выходим из прерывания
 
 ;.............................................................................
 
 ;Прерывания от пришедшего байта в UART
-RX_OK:
-	PUSH GREG
-	IN GREG,SREG			; Save Sreg
-	PUSH GREG
+UartRxInt:
+	push GREG
+	in GREG,SREG			; Save Sreg
+	push GREG
 
-	LDS GREG,UDR0
-	STS UDR0,GREG
+	lds GREG,UDR0
+	sts UDR0,GREG
 
-	POP GREG				; Восстанавливаем регистры
-	OUT SREG,GREG			;
-	POP GREG
-	RETI					; Выходим из прерывания
+	pop GREG				; Восстанавливаем регистры
+	out SREG,GREG			;
+	pop GREG
+	reti					; Выходим из прерывания
 
 ;=============================================================================!
 ; Main code ==================================================================!
 ;=============================================================================!
 Reset:
-	INIT_STACK RAMEND								
-	.include "init.asm"				; Все инициализации тут.
+	INIT_STACK RAMEND	; prepare stack							
+	CLEAR_RAM		; clear ram
+	INIT_RTOS		; prepare task queues
+
+	SETUP_USART0	; setup usart0
+	SETUP_TIMER0 10000	; setup rtos timer
+	sei
+
 
 
 ; Запуск фоновых процессов
 Background:	
-	RCALL	Send				; Отсыл байт в UART 
+	rcall	Send				; Отсыл байт в UART 
 			
 
 Main:
 	rcall 	ProcessTaskQueue		; Обработка очереди процессов
 	rcall 	Idle				; Простой Ядра
 								
-	RJMP 	Main				; Основной цикл микроядра РТОС
+	rjmp 	Main				; Основной цикл микроядра РТОС
 
 ;=============================================================================
 ;Tasks
 ;=============================================================================
-Idle:		RET		; Простой ядра. Не используется
+Idle:		ret		; Простой ядра. Не используется
 
 ;-----------------------------------------------------------------------------
-; Задача отсылки данных через терминал
-Send:
-        SetTimerTask TS_Send, 25
-        ldi GREG, 48
-        rcall SendByte
-        ldi GREG, 49
-        rcall SendByte
-        ldi GREG, 50
-        rcall SendByte
-        ret
+; USART Transmit task
+Send:	SetTimerTask TS_Send, 25
+	ldi GREG, 48
+	rcall SendByte
+	ldi GREG, 49
+	rcall SendByte
+	ldi GREG, 50
+	rcall SendByte
+	ret
 
-SendByte:
-	lds tmp2, UCSR0A
-	sbrs tmp2, UDRE0			; Wait for empty transmit buffer
+SendByte:	lds Tmp2, UCSR0A
+	sbrs Tmp2, UDRE0	; Wait for empty transmit buffer
 	rjmp SendByte
 	sts UDR0, GREG
 	ret

@@ -44,7 +44,7 @@ reti
 reti
 
 .ORG $01C       ; Timer0 Compare A Handler
-rjmp OutComp2Int
+rjmp RtosTimerInt
 
 .ORG $01E       ; Timer0 Compare B Handler
 reti
@@ -56,7 +56,7 @@ reti
 reti
 
 .ORG $024       ; USART, RX Complete Handler
-RJMP RX_OK
+RJMP UartRxInt
 
 .ORG $026       ; USART, UDR Empty Handler
 reti
