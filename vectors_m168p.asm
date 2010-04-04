@@ -44,7 +44,7 @@ reti
 reti
 
 .ORG $01C       ; Timer0 Compare A Handler
-rjmp RtosTimerInt
+rjmp RtosInt
 
 .ORG $01E       ; Timer0 Compare B Handler
 reti

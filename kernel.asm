@@ -1,3 +1,4 @@
+.CSEG
 EEPROMRead:
 ERL01:	sbic	EECR,EEPE	;if EEWE not clear
 		rjmp	ERL01		; wait more 
