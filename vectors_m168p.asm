@@ -2,7 +2,7 @@
 
 
 .ORG $000       ; Reset Handler				
-rjmp	Reset
+rjmp Reset
 
 .ORG $002       ; IRQ0 Handler
 reti
