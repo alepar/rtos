@@ -1,8 +1,7 @@
 .CSEG
 ; initial task launch
-Main:	rcall Task_Send		; uart send task 
+Main:				; no background tasks
 
-Loop:	rcall ProcessTaskQueue		; run scheduled tasks
+RtosLoop:	rcall ProcessTaskQueue		; run scheduled tasks
 	rcall Task_Idle		; idle sleep								
-	rjmp Loop			; main rtos loop
- 
+	rjmp RtosLoop		; main rtos loop
