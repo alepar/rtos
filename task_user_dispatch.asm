@@ -1,5 +1,5 @@
-.equ MIN_TS = 3
-.equ MAX_TS = 5
+.equ MIN_TS = 0
+.equ MAX_TS = 0
 
 .CSEG
 
@@ -12,7 +12,7 @@ Task_Dispatch:
 	subi GREG, 48		; convert ASCII digit to byte
 	cpi GREG, MIN_TS		; check range
 	brlo DispWrong
-	cpi GREG, MaX_TS+1
+	cpi GREG, MAX_TS+1
 	brsh DispWrong
 
 	ldi ZH, high(JumpTable)		; Z = &JumpTable
