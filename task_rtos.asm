@@ -1,2 +1,2 @@
 .CSEG
-Idle:	ret		; idle sleep proc
+Task_Idle:	ret		; idle sleep proc

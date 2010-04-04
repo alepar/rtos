@@ -1,5 +1,5 @@
 .CSEG
-Send:	SetTimerTask TS_Send, 25
+Task_Send:	SetTimerTask TS_Send, 25
 	ldi GREG, 48
 	rcall SendByte
 	ldi GREG, 49
