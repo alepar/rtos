@@ -12,10 +12,19 @@ SendByte:	lds Tmp2, UCSR0A
 ; ping reply task
 ; used to detect presence of watchdog on port
 ; @spoil GREG
-Pong:	ldi GREG, 0xBA
+Pong:	ldi GREG, 0x02
+	rcall SendByte
+	ldi GREG, 0xBA
 	rcall SendByte
 	ldi GREG, 0xBE
+	rjmp SendByte
+
+; reply to firmware version request task
+; used to detect if firmware is compatible with daemon
+; @spoil GREG
+Firmware:	ldi GREG, 0x02
 	rcall SendByte
-	ret
-
-
+	ldi GREG, 0x01
+	rcall SendByte
+	ldi GREG, 0x01
+	rjmp SendByte

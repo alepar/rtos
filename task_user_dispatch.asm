@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 0
+.equ MAX_TS = 1
 
 .CSEG
 
@@ -27,3 +27,4 @@ Task_Dispatch:
 DispWrong:	ret			; received wrong task number for dispatch
 				; skip it
 JumpTable:	rjmp Pong
+	rjmp Firmware
