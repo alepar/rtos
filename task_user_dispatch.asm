@@ -28,3 +28,10 @@ DispWrong:	ret			; received wrong task number for dispatch
 				; skip it
 JumpTable:	rjmp Pong
 	rjmp Firmware
+
+;todo
+; - SetAlarmLed
+; - SetSound
+; - WDR
+; - State
+; - handle external reset\sound
