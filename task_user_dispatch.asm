@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 1
+.equ MAX_TS = 2
 
 .CSEG
 
@@ -9,7 +9,7 @@
 ; @spoil GREG
 Task_Dispatch:
 	mov GREG, UCC0
-	subi GREG, 48		; convert ASCII digit to byte
+	subi GREG, '0'		; convert ASCII digit to byte
 	cpi GREG, MIN_TS		; check range
 	brlo DispWrong
 	cpi GREG, MAX_TS+1
@@ -28,6 +28,7 @@ DispWrong:	ret			; received wrong task number for dispatch
 				; skip it
 JumpTable:	rjmp Pong
 	rjmp Firmware
+	rjmp SoundAlarm
 
 ;todo
 ; - SetAlarmLed

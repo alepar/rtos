@@ -5,3 +5,6 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_Dispatch = 1
 	.dw Task_Dispatch
+
+	.equ TS_Beeper = 2
+	.dw Task_Beeper
