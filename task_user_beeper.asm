@@ -15,15 +15,13 @@ Turn_On:	ldi GREG, 1
 	ldi GREG, 1			; send confirmation
 	rcall SendByte
 	ldi GREG, 1
-	rcall SendByte
-	ret
+	rjmp SendByte
 Turn_Off:	ldi GREG, 0			
 	mov ENABLED, GREG		; set ENABLED to 0
 	ldi GREG, 1			; send confirmation
 	rcall SendByte
 	ldi GREG, 0
-	rcall SendByte
-	ret
+	rjmp SendByte
 
 Task_Beeper:tst ENABLED			; check ENABLED state
 	breq Beeper_End		; if it is zero - stop task

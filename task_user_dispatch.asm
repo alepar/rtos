@@ -32,7 +32,6 @@ JumpTable:	rjmp Pong
 	rjmp SetLedState
 
 ;todo
-; - SetAlarmLed
 ; - WDR
 ; - State
 ; - handle external reset\sound

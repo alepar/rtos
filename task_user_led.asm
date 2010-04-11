@@ -3,11 +3,19 @@ SetLedState:mov GREG, UCC1
 	subi GREG, '0'
 	mov LED_STATE, GREG
 	tst LED_STATE
-	breq Led_End
+	breq Led_Off
 	clr LED_COUNTER
 	clr LED_SWITCH
 	SetTimerTask TS_Led, LED_DELAY
-Led_End:	ret
+	ldi GREG, 0x01
+	rcall SendByte
+	ldi GREG, 0x01
+	rjmp SendByte
+Led_Off:	ldi GREG, 0x01
+	rcall SendByte
+	ldi GREG, 0x00
+	rjmp SendByte
+
 
 Task_Led:	tst LED_STATE		; check if leds turned off
 	breq TLed_Off		; if they are off, turn them off
