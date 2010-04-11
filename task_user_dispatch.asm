@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 2
+.equ MAX_TS = 3
 
 .CSEG
 
@@ -29,10 +29,10 @@ DispWrong:	ret			; received wrong task number for dispatch
 JumpTable:	rjmp Pong
 	rjmp Firmware
 	rjmp SoundAlarm
+	rjmp SetLedState
 
 ;todo
 ; - SetAlarmLed
-; - SetSound
 ; - WDR
 ; - State
 ; - handle external reset\sound

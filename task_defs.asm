@@ -8,3 +8,6 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_Beeper = 2
 	.dw Task_Beeper
+
+	.equ TS_Led = 3
+	.dw Task_Led
