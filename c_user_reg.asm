@@ -7,10 +7,10 @@
 .def UCC1 = R5			; received parameter
 
 ;==BEEPER task
-.def STATE = R6			; current state of beeper output pin
-.def ENABLED = R7			; enabled/disabled state
+.def BEEPER_STATE = R6			; current state of beeper output pin
+.def BEEPER_ENABLED = R7			; enabled/disabled state
 .equ BEEPER_MASK = 0b00001000		; port pin mask
-.equ DELAY = 7			; number used for SetTimerTask (beeper freq)
+.equ BEEPER_DELAY = 7			; number used for SetTimerTask (beeper freq)
 
 ;==LED task
 .def LED_STATE = R8			; which leds are on
