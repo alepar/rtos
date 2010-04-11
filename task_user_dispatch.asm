@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 3
+.equ MAX_TS = 4
 
 .CSEG
 
@@ -30,8 +30,8 @@ JumpTable:	rjmp Pong
 	rjmp Firmware
 	rjmp SoundAlarm
 	rjmp SetLedState
+	rjmp StatusReport
 
 ;todo
 ; - WDR
-; - State
 ; - handle external reset\sound

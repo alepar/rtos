@@ -28,3 +28,13 @@ Firmware:	ldi GREG, 0x02
 	rcall SendByte
 	ldi GREG, 0x01
 	rjmp SendByte
+
+; reply with cuurent status
+; @spoil GREG
+StatusReport:
+	ldi GREG, 0x02
+	rcall SendByte
+	mov GREG, LED_STATE
+	rcall SendByte
+	mov GREG, BEEPER_ENABLED
+	rjmp SendByte
