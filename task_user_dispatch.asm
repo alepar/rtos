@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 4
+.equ MAX_TS = 5
 
 .CSEG
 
@@ -31,6 +31,7 @@ JumpTable:	rjmp Pong
 	rjmp SoundAlarm
 	rjmp SetLedState
 	rjmp StatusReport
+	rjmp WDR_Reset
 
 ;todo
 ; - WDR

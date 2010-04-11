@@ -23,3 +23,11 @@
 .equ LED_PORTD_MASK = 0b11000000		; output pins
 .equ LED_PORTB_MASK = 0b00000111
 
+;==WDR task
+.def WDR_CNT_LOW = R11			; counter regs
+.def WDR_CNT_HIGH = R12
+.def WDR_RST = R13			; wdr called?
+.equ WDR_CNT_TOP = 20			; wd timeout, each 10 is ~ 1min
+.equ WDR_TS_DELAY = 235			; value for SetTimerTask
+
+

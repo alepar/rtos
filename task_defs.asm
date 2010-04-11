@@ -11,3 +11,6 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_Led = 3
 	.dw Task_Led
+
+	.equ TS_WDR = 4
+	.dw Task_WDR

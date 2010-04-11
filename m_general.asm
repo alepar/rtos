@@ -4,8 +4,13 @@
 .endmacro
 
 .macro STI
-	LDI GREG, @1
-	STS @0, GREG
+	ldi GREG, @1
+	sts @0, GREG
+.endmacro
+
+.macro MOVI
+	ldi GREG, @1
+	mov @0, GREG
 .endmacro
 
 .macro INIT_STACK
