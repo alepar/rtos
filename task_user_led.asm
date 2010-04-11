@@ -1,10 +1,3 @@
-.def LED_STATE = R10
-.def LED_COUNTER = R11
-.def LED_SWITCH = R12
-
-.equ LED_CNT_TOP = 20
-.equ LED_DELAY = 255
-
 .CSEG
 SetLedState:mov GREG, UCC1
 	subi GREG, '0'

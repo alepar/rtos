@@ -8,7 +8,7 @@ SoundAlarm:	ldi GREG, '0'
 	breq Turn_Off
 Turn_On:	ldi GREG, 1			
 	mov ENABLED, GREG		; set ENABLED to 1
-	ldi GREG, MASK
+	ldi GREG, BEEPER_MASK
 	mov STATE, GREG		; set STATE
 	out PORTC, STATE		; output STATE
 	SetTimerTask TS_Beeper, DELAY	; schedule
@@ -27,7 +27,7 @@ Turn_Off:	ldi GREG, 0
 
 Task_Beeper:tst ENABLED			; check ENABLED state
 	breq Beeper_End		; if it is zero - stop task
-	ldi GREG, MASK
+	ldi GREG, BEEPER_MASK
 	eor STATE, GREG
 	out PORTC, STATE
 	SetTimerTask TS_Beeper, DELAY		
