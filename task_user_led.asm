@@ -4,7 +4,6 @@ SetLedState:mov GREG, UCC1
 	mov LED_STATE, GREG
 	tst LED_STATE
 	breq Led_Off
-	clr LED_COUNTER
 	clr LED_SWITCH
 	SetTimerTask TS_Led, LED_DELAY
 	ldi GREG, 0x01
@@ -19,11 +18,6 @@ Led_Off:	ldi GREG, 0x01
 
 Task_Led:	tst LED_STATE		; check if leds turned off
 	breq TLed_Off		; if they are off, turn them off
-	inc LED_COUNTER
-	mov GREG, LED_COUNTER		
-	cpi GREG, LED_CNT_TOP		; check if it is time to switch
-	brne TLed_End
-	clr LED_COUNTER		; reset counter
 	tst LED_SWITCH
 	breq LightAlarm		; light alarm led or rest?
 	clr LED_SWITCH

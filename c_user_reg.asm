@@ -14,10 +14,8 @@
 
 ;==LED task
 .def LED_STATE = R8			; which leds are on
-.def LED_COUNTER = R9			; second counter (task freq is too high, need to lower it)
 .def LED_SWITCH = R10			; alarm led os other leds is on
 
-.equ LED_CNT_TOP = 20			; top value for second counter
 .equ LED_DELAY = 255			; number for SetTimerTask
 
 .equ LED_PORTD_MASK = 0b11000000		; output pins
@@ -25,9 +23,7 @@
 
 ;==WDR task
 .def WDR_CNT_LOW = R11			; counter regs
-.def WDR_CNT_HIGH = R12
 .def WDR_RST = R13			; wdr called?
-.equ WDR_CNT_TOP = 20			; wd timeout, each 10 is ~ 1min
-.equ WDR_TS_DELAY = 235			; value for SetTimerTask
+.equ WDR_TS_DELAY = 255			; value for SetTimerTask
 
 

@@ -7,6 +7,7 @@
 ; @param UCC0 command to dispatch
 ; @param UCC1 parameter
 ; @spoil GREG
+; @spoil Tmp2
 Task_Dispatch:
 	mov GREG, UCC0
 	subi GREG, '0'		; convert ASCII digit to byte
@@ -18,8 +19,9 @@ Task_Dispatch:
 	ldi ZH, high(JumpTable)		; Z = &JumpTable
 	ldi ZL, low(JumpTable)
 	subi GREG, MIN_TS		; shift Z to appropriate task
+	clr Tmp2
 	add ZL, GREG
-	adc ZH, ZERO
+	adc ZH, Tmp2
 
 	ijmp			; indirect jump to matched routine
 				; appropriate return will be made from it
