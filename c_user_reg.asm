@@ -24,6 +24,6 @@
 ;==WDR task
 .def WDR_CNT_LOW = R11			; counter regs
 .def WDR_RST = R13			; wdr called?
-.equ WDR_TS_DELAY = 255			; value for SetTimerTask
+.equ WDR_TS_DELAY = 235			; value for SetTimerTask
 
 
