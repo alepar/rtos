@@ -10,7 +10,8 @@ Task_WDR:	tst WDR_ARMED		; checking if WDR armed
 	rcall SendByte
 	ldi GREG, 0xCC
 	rcall SendByte
-	; TODO toggle reset
+	; TODO set output pin to 1
+	SetTimerTask TS_WDR_Release, 0xFF
 WDR_End:	SetTimerTask TS_WDR, WDR_TS_DELAY
 	ret
 
@@ -31,4 +32,8 @@ WDR_Arm:	tst UCC1			; Arm or Unarm?
 	SetTimerTask TS_WDR, WDR_TS_DELAY	; schedule task
 	ret
 WDR_Unarm:	clr WDR_ARMED		; clear ARMED flag
+	ret
+
+Task_WDR_Release:
+	; TODO set output pin to 0
 	ret
