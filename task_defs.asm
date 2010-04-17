@@ -14,3 +14,6 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_WDR_Release = 4
 	.dw Task_WDR_Release
+
+	.equ TS_Beeper = 5
+	.dw Task_Beeper

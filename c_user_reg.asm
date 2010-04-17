@@ -7,7 +7,7 @@
 .def UCC1 = R5			; received parameter
 
 ;==BEEPER task
-.def BEEPER_STATE = R6			; current state of beeper output pin
+.def BEEPER_STATE = R6			; current state of timer
 .def BEEPER_ENABLED = R7		; enabled/disabled state
 
 .equ BEEPER_MASK = 0b00001000		; port pin mask

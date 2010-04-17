@@ -3,23 +3,35 @@
 .CSEG
 
 ; @spoil GREG
-SoundAlarm:	outi DDRB, 0b00001000
+SoundAlarm:	mov BEEPER_ENABLED, UCC1
 	tst UCC1
-	breq Turn_Off
-Turn_On:	sti OCR2A, 115
-	sti TCCR2A, (1<<COM2A0)|(2<<WGM20)
-	sti TCCR2B, (5<<CS20)
-	inc BEEPER_ENABLED
-	rjmp B_Report
-Turn_Off:	sti TCCR2B, 0
-	clr BEEPER_ENABLED
-B_Report:	ldi GREG, 0x02
+	breq B_Report
+	SetTask TS_Beeper
+B_Report:	ldi GREG, 0x02		; confirm to usart
 	rcall SendByte
 	ldi GREG, 0x02
 	rcall SendByte
-	mov GREG, UCC1
+	mov GREG, BEEPER_ENABLED
 	rjmp SendByte
 
+Task_Beeper:tst BEEPER_ENABLED		; Beeper enabled?
+	breq Beeper_End
+	tst BEEPER_STATE
+	breq Beeper_On
+Beeper_Off:	sti TCCR2B, 0		; switch timer off
+	clr BEEPER_STATE
+	rjmp Beeper_Sched
+Beeper_On:	outi DDRB, 0b00001000		; switch timer on
+	sti OCR2A, 125
+	sti TCCR2A, (1<<COM2A0)|(2<<WGM20)
+	sti TCCR2B, (5<<CS20)
+	inc BEEPER_STATE
+Beeper_Sched:
+	SetTimerTask TS_Beeper, 0xFF	; schedule task
+	ret
+Beeper_End:	sti TCCR2B, 0		; turn off completely
+	clr BEEPER_STATE
+	ret
 
 
 ; CS22 	CS21	CS20	Description
