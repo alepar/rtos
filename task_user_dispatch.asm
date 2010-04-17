@@ -34,6 +34,7 @@ JumpTable:	rjmp Pong
 	rjmp SetLedState
 	rjmp StatusReport
 	rjmp WDR_Reset
+	rjmp WDR_Arm
 
 ;todo
 ; - WDR arm
