@@ -40,5 +40,6 @@ JumpTable:	rjmp Pong
 	rjmp WDR_Arm
 
 ;todo
-; - improve beeper task
 ; - handle external reset\sound
+; - combine beeper pin with led pins
+; - define hi-z pull-up state for all unused pins

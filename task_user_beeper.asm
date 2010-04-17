@@ -10,7 +10,9 @@ SoundAlarm:	outi DDRB, 0b00001000
 Turn_On:	sti OCR2A, 156
 	sti TCCR2A, (1<<COM2A0)|(2<<WGM20)
 	sti TCCR2B, (5<<CS20)
-Turn_Off:	ret
+	ret
+Turn_Off:	sti TCCR2B, 0
+	ret
 
 
 ; CS22 	CS21	CS20	Description
