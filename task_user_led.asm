@@ -1,6 +1,5 @@
 .CSEG
 SetLedState:mov GREG, UCC1
-	subi GREG, '0'
 	mov LED_STATE, GREG
 	tst LED_STATE
 	breq Led_Off

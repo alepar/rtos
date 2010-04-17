@@ -22,9 +22,12 @@ Task_Dispatch:
 	clr Tmp2
 	add ZL, GREG
 	adc ZH, Tmp2
+	mov GREG, UCC1		; atoi()
+	subi GREG, '0'
+	mov UCC1, GREG
 
 	ijmp			; indirect jump to matched routine
-				; appropriate return will be made from it
+				; matching ret will be made from it
 
 DispWrong:	ret			; received wrong task number for dispatch
 				; skip it

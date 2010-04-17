@@ -8,7 +8,7 @@ Task_WDR:	tst WDR_ARMED		; checking if WDR armed
 	movi WDR_CNT_LOW, 0xff		; counter compare match, resetting
 	ldi GREG, 0x01		; send confirmation to usart
 	rcall SendByte
-	ldi GREG, 0xcc
+	ldi GREG, 0xCC
 	rcall SendByte
 	; TODO toggle reset
 WDR_End:	SetTimerTask TS_WDR, WDR_TS_DELAY
@@ -18,10 +18,10 @@ WDR_Reset:	movi WDR_CNT_LOW, 0xff
 	clr WDR_RST
 	ldi GREG, 0x01
 	rcall SendByte
-	ldi GREG, 0xaa
+	ldi GREG, 0xAA
 	rjmp SendByte
 
-WDR_Arm:	tst UCC1
+WDR_Arm:	tst UCC1			; Arm or Unarm?
 	breq WDR_Unarm		; send confirmation to usart
 	ldi GREG, 0x01
 	rcall SendByte
