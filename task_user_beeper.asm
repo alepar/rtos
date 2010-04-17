@@ -4,15 +4,22 @@
 
 ; @spoil GREG
 SoundAlarm:	outi DDRB, 0b00001000
-	ldi GREG, '0'
-	cp UCC1, GREG
+	tst UCC1
 	breq Turn_Off
-Turn_On:	sti OCR2A, 156
+Turn_On:	sti OCR2A, 115
 	sti TCCR2A, (1<<COM2A0)|(2<<WGM20)
 	sti TCCR2B, (5<<CS20)
-	ret
+	inc BEEPER_ENABLED
+	rjmp B_Report
 Turn_Off:	sti TCCR2B, 0
-	ret
+	clr BEEPER_ENABLED
+B_Report:	ldi GREG, 0x02
+	rcall SendByte
+	ldi GREG, 0x02
+	rcall SendByte
+	mov GREG, UCC1
+	rjmp SendByte
+
 
 
 ; CS22 	CS21	CS20	Description
