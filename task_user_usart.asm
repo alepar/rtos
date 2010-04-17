@@ -32,9 +32,11 @@ Firmware:	ldi GREG, 0x02
 ; reply with cuurent status
 ; @spoil GREG
 StatusReport:
-	ldi GREG, 0x02
+	ldi GREG, 0x03
 	rcall SendByte
 	mov GREG, LED_STATE
 	rcall SendByte
 	mov GREG, BEEPER_ENABLED
+	rcall SendByte
+	mov GREG, WDR_ARMED
 	rjmp SendByte
