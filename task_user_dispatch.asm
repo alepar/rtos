@@ -36,5 +36,8 @@ JumpTable:	rjmp Pong
 	rjmp WDR_Reset
 
 ;todo
-; - WDR
+; - WDR arm
+; - WDR unarm
+; - status to include wdr
+; - improve beeper task
 ; - handle external reset\sound
