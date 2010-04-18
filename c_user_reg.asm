@@ -12,6 +12,7 @@
 
 .equ BEEPER_MASK = 0b00001000		; port pin mask
 .equ BEEPER_DELAY = 7			; number used for SetTimerTask (beeper freq)
+.equ BEEPER_TOP = 125			; TOP value for timer
 
 ;==LED task
 .def LED_STATE = R8			; which leds are on

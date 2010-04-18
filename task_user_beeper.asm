@@ -21,8 +21,7 @@ Task_Beeper:tst BEEPER_ENABLED		; Beeper enabled?
 Beeper_Off:	sti TCCR2B, 0		; switch timer off
 	clr BEEPER_STATE
 	rjmp Beeper_Sched
-Beeper_On:	outi DDRB, 0b00001000		; switch timer on
-	sti OCR2A, 125
+Beeper_On:	sti OCR2A, BEEPER_TOP		; switch timer on
 	sti TCCR2A, (1<<COM2A0)|(2<<WGM20)
 	sti TCCR2B, (5<<CS20)
 	inc BEEPER_STATE
