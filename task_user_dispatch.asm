@@ -1,5 +1,5 @@
 .equ MIN_TS = 0
-.equ MAX_TS = 5
+.equ MAX_TS = 6
 
 .CSEG
 

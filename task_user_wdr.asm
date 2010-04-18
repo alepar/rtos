@@ -22,12 +22,14 @@ WDR_Reset:	movi WDR_CNT_LOW, 0xff
 	ldi GREG, 0xAA
 	rjmp SendByte
 
-WDR_Arm:	tst UCC1			; Arm or Unarm?
-	breq WDR_Unarm		; send confirmation to usart
-	ldi GREG, 0x01
+WDR_Arm:	ldi GREG, 0x02		; send confirmation to usart
 	rcall SendByte
-	ldi GREG, 0x05
+	ldi GREG, 0x06
 	rcall SendByte
+	mov GREG, UCC1
+	rcall SendByte
+	tst UCC1			; Arm or Unarm?
+	breq WDR_Unarm		
 	inc WDR_ARMED		; set ARMED flag
 	SetTimerTask TS_WDR, WDR_TS_DELAY	; schedule task
 	ret
