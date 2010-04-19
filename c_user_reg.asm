@@ -10,7 +10,7 @@
 .def BEEPER_STATE = R6			; current state of timer
 .def BEEPER_ENABLED = R7		; enabled/disabled state
 
-.equ BEEPER_MASK = 0b00001000		; port pin mask
+.equ BPR_PORTB_MASK = 0b00001000		; port pin mask
 .equ BEEPER_DELAY = 7			; number used for SetTimerTask (beeper freq)
 .equ BEEPER_TOP = 125			; TOP value for timer
 
@@ -28,5 +28,7 @@
 .def WDR_ARMED = R12
 
 .equ WDR_TS_DELAY = 235			; value for SetTimerTask
+.equ WDR_PORTC_MASK = 0b00001000		; wdr reset output pin mask
 
-
+;==BTN task
+.equ BTN_PULLUP_MSK = 0b00111000		; pullup

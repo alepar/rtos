@@ -10,7 +10,7 @@ Task_WDR:	tst WDR_ARMED		; checking if WDR armed
 	rcall SendByte
 	ldi GREG, 0xCC
 	rcall SendByte
-	; TODO set output pin to 1
+	outi PORTC, WDR_PORTC_MASK	; only wdr on PORTC, so this is safe
 	SetTimerTask TS_WDR_Release, 0xFF
 WDR_End:	SetTimerTask TS_WDR, WDR_TS_DELAY
 	ret
@@ -37,5 +37,5 @@ WDR_Unarm:	clr WDR_ARMED		; clear ARMED flag
 	ret
 
 Task_WDR_Release:
-	; TODO set output pin to 0
+	outi PORTC, 0x00		; only wdr on PORTC, so this is safe
 	ret

@@ -41,6 +41,4 @@ JumpTable:	rjmp Pong
 
 ;todo
 ; - handle external reset\sound
-; - combine beeper pin with led pins
-; - do actual pin toggle in WDR_Release
-; - define hi-z pull-up state for all unused pins
+; - check all commands give response
