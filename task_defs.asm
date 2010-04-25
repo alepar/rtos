@@ -17,3 +17,6 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_Beeper = 5
 	.dw Task_Beeper
+
+	.equ TS_ReenablePcint2 = 6
+	.dw ReenablePcint2

@@ -17,7 +17,7 @@ reti
 reti
 
 .ORG $00A       ; PCINT2 Handler
-reti
+rjmp Pcint2Handler
 
 .ORG $00C       ; Watchdog Timer Handler
 reti
