@@ -20,3 +20,14 @@ TaskProcs:			; task jump addresses and indexes
 
 	.equ TS_ReenablePcint2 = 6
 	.dw ReenablePcint2
+
+	.equ TS_Btn_PD3 = 7
+	.dw Btn_PD3
+
+	.equ TS_Btn_PD4 = 8
+	.dw Btn_PD4
+
+	.equ TS_Btn_PD5 = 9
+	.dw Btn_PD5
+
+

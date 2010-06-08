@@ -29,7 +29,7 @@ Firmware:	ldi GREG, 0x02
 	ldi GREG, 0x01
 	rjmp SendByte
 
-; reply with cuurent status
+; reply with current status
 ; @spoil GREG
 StatusReport:
 	ldi GREG, 0x03
