@@ -8,7 +8,7 @@ Pcint2Handler:
 	sti PCICR, 0		; mask pcint2
 	SetTimerTask TS_ReenablePcint2, 255	; schedule for enabling it back
 
-	in Tmp2, PIND		; report
+	in Tmp2, PIND
 	ldi GREG, 0xff
 	eor Tmp2, GREG
 

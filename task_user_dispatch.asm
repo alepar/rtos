@@ -40,5 +40,12 @@ JumpTable:	rjmp Pong
 	rjmp WDR_Arm
 
 ;todo
-; - handle external reset\sound
+
+; - handle buttons
+;	* pd3 - reset - notify host
+;	* pd4 - mute - disable sound
+;	* InDe - notify host
+
+; - WDR - output on reset pin
+
 ; - check all commands give response
